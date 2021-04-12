@@ -6,7 +6,7 @@
 #    By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 11:13:40 by ldutriez          #+#    #+#              #
-#    Updated: 2021/04/12 14:17:15 by ldutriez         ###   ########.fr        #
+#    Updated: 2021/04/12 17:01:35 by ldutriez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,18 @@ SRCS_DIR = $(shell find srcs -type d)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-INC_ONE_DIR =	$(shell find includes/philo_one -type d)
-INC_TWO_DIR		= $(shell find includes/philo_two -type d)
-INC_THREE_DIR	= $(shell find includes/philo_three -type d)
+INC_ONE_DIR =	$(shell find includes/philo_one -type d) \
+				$(shell find includes/common_part -type d)
+INC_TWO_DIR		= $(shell find includes/philo_two -type d) \
+				$(shell find includes/common_part -type d)
+INC_THREE_DIR	= $(shell find includes/philo_three -type d) \
+				$(shell find includes/common_part -type d)
 
 OBJ_ONE_DIR = objs/philo_one
 OBJ_TWO_DIR		= objs/philo_two
 OBJ_THREE_DIR	= objs/philo_three
 
-SRCS_ONE	=	philo_one.c routine.c
+SRCS_ONE		=	philo_one.c routine.c philo_one_parsing.c p_nbr_len.c
 
 SRCS_TWO		=	philo_two.c
 

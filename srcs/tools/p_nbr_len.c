@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one_includes.h                               :+:      :+:    :+:   */
+/*   p_nbr_len.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:18:59 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/12 16:37:21 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/12 16:52:07 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_INCLUDES_H
-# define PHILO_ONE_INCLUDES_H
+#include "common_part.h"
 
-# include <sys/time.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <pthread.h>
-# include "common_part.h"
-# include "philo_one_struct.h"
-# include "philo_one_load.h"
+int	nbr_len(long long int nbr)
+{
+	int	result;
 
-#endif
+	result = 1;
+	nbr = (nbr < 0) ? nbr * - 1 : nbr;
+	while (nbr >= 10)
+	{
+		nbr /= 10;
+		result++;
+	}
+	return (result);
+}
+
+int	str_len(char *str)
+{
+	int result;
+
+	result = 0;
+	while (str[result] != '\0')
+		result++;
+	return (result);
+}

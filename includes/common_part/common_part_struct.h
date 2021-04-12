@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one_includes.h                               :+:      :+:    :+:   */
+/*   common_part_struct.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:18:59 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/12 14:28:06 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/12 16:39:58 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_INCLUDES_H
-# define PHILO_ONE_INCLUDES_H
+#ifndef COMMON_PART_STRUCT_H
+# define COMMON_PART_STRUCT_H
 
-# include <sys/time.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
 # include <pthread.h>
-# include "common_part.h"
-# include "philo_one_struct.h"
-# include "philo_one_load.h"
+
+typedef struct	s_args
+{
+	unsigned int	phi_nb;
+	unsigned int	t_to_die;
+	unsigned int	t_to_eat;
+	unsigned int	t_to_sleep;
+	int				must_eat;
+}				t_args;
+
+typedef struct	s_phi
+{
+	pthread_t		th;
+	unsigned int	tag;
+}				t_phi;
+
+typedef char	t_bool;
+enum {false, true};
 
 #endif

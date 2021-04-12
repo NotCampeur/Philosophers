@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one_includes.h                               :+:      :+:    :+:   */
+/*   philo_two_includes.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:18:59 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/12 14:42:48 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/12 14:43:12 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_INCLUDES_H
-# define PHILO_ONE_INCLUDES_H
+#ifndef PHILO_TWO_INCLUDES_H
+# define PHILO_TWO_INCLUDES_H
 
-# include <sys/time.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <pthread.h>
 # include "common_part.h"
-# include "philo_one_struct.h"
-# include "philo_one_load.h"
 
 #endif
