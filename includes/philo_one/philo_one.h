@@ -6,12 +6,12 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:16 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 09:03:30 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/13 09:47:25 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE
-# define PHILO_ONE
+#ifndef PHILO_ONE_H
+# define PHILO_ONE_H
 
 # include "philo_one_includes.h"
 

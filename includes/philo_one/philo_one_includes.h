@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:18:59 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/13 11:17:08 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/time.h>
 # include <unistd.h>
+# include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>

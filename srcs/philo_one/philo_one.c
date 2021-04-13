@@ -6,32 +6,46 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:29:52 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/13 12:41:59 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-void *routine()
+void		*routine(void *arg)
 {
+	(void)arg;
 	printf("Okay this is a thread\n");
 	return (NULL);
 }
 
-int	main(int ac, char *av[])
+static void	test_thread(void)
 {
 	pthread_t	thread[5];
+	int			i;
 
-	printf("t_bool size [%ld]\n", sizeof(t_bool));
-	if (parse_args(ac, av) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	for (int i=0; i < 5; i++)
+	i = 0;
+	while (i < 5)
 	{
-		pthread_create(&thread[i], NULL, &routine, NULL);
 		printf("[%d] created\n", i);
+		pthread_create(&thread[i], NULL, &routine, NULL);
+		i++;
 	}
-	
-	for (int i=0; i < 5; i++)
+	i = 0;
+	while (i < 5)
+	{
 		pthread_join(thread[i], NULL);
-	return (0);
+		i++;
+	}
+}
+
+int			main(int ac, char *av[])
+{
+	t_sys	system;
+	
+	if (load_program(ac, av, &system) == EXIT_FAILURE)
+		return (clean_exit(&system, EXIT_FAILURE));
+	test_thread();
+	clean_exit(&system, EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

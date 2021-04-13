@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p_nbr_len.c                                        :+:      :+:    :+:   */
+/*   p_atoi.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 16:37:21 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 17:07:51 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/13 10:46:52 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/13 11:57:39 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common_part.h"
 
-int	nbr_len(long long int nbr)
+int	p_atoi(char *str)
 {
 	int	result;
+	int	index;
+	int	sign;
 
-	result = 1;
-	nbr = (nbr < 0) ? nbr * -1 : nbr;
-	while (nbr >= 10)
-	{
-		nbr /= 10;
-		result++;
-	}
-	return (result);
-}
-
-int	str_len(char *str)
-{
-	int result;
-
+	if (str == NULL)
+		return (0);
 	result = 0;
-	while (str[result] != '\0')
-		result++;
-	return (result);
+	index = 0;
+	sign = 1;
+	while (str[index] == ' ')
+		index++;
+	if (str[index] == '+')
+		index++;
+	else if (str[index] == '-')
+	{
+		index++;
+		sign *= -1;
+	}
+	while (str[index] != '\0' && (str[index] >= '0' && str[index] <= '9'))
+	{
+		result = (result * 10) + (str[index] - '0');
+		index++;
+	}
+	return (result * sign);
 }

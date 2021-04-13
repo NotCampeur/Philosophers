@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:00:01 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:58:27 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/13 10:37:23 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,21 @@ static t_bool		is_suitable(char *str[])
 	return (true);
 }
 
-int	parse_args(int ac, char *av[])
+int					parse_args(int ac, char *av[])
 {
 	if (ac != 5 && ac != 6)
 	{
-		write(2, "Arguments unavailable\n", 23);
+		write(2, "Invalid number of arguments\n", 29);
 		return (EXIT_FAILURE);
 	}
 	if (is_suitable(av) == false)
 	{
-		write(2, "Arguments unavailable\n", 23);
+		write(2, "Arguments are not only composed by digits\n", 43);
 		return (EXIT_FAILURE);
 	}
 	if (is_integer(av) == false)
 	{
-		write(2, "Arguments unavailable\n", 23);
+		write(2, "Arguments are not int\n", 23);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
