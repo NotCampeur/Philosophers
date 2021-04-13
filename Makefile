@@ -6,7 +6,7 @@
 #    By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 11:13:40 by ldutriez          #+#    #+#              #
-#    Updated: 2021/04/13 12:19:12 by ldutriez         ###   ########.fr        #
+#    Updated: 2021/04/13 15:10:29 by ldutriez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ OBJ_TWO_DIR		= objs/philo_two
 OBJ_THREE_DIR	= objs/philo_three
 
 SRCS_ONE		=	philo_one.c routine.c philo_one_parsing.c philo_one_engine.c \
-					p_nbr_len.c p_atoi.c
+					p_nbr_len.c p_atoi.c p_put_timestamp.c p_putnbr.c
 
 SRCS_TWO		=	philo_two.c
 

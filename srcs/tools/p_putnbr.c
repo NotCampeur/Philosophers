@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one_includes.h                               :+:      :+:    :+:   */
+/*   p_putnbr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/13 13:54:55 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/13 14:59:22 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/13 16:04:27 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_INCLUDES_H
-# define PHILO_ONE_INCLUDES_H
+#include "common_part.h"
 
-# include <sys/time.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <pthread.h>
-# include "common_part.h"
-# include "philo_one_struct.h"
-# include "philo_one_load.h"
-# include "philo_one_routine.h"
+void	p_putchar(char c)
+{
+	write(1, &c, 1);
+}
 
-#endif
+void	p_putull(unsigned long long nb)
+{
+	if (nb >= 10ull)
+		p_putnbr(nb / 10ull);
+	p_putchar((nb % 10ull) + 48ull);
+}
+
+void	p_putnbr(int nb)
+{
+	if (nb < 0)
+	{
+		write(1, "-", 1);
+		nb = nb * -1;
+	}
+	if (nb >= 10)
+		p_putnbr(nb / 10);
+	p_putchar((nb % 10) + '0');
+}

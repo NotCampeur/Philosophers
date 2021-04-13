@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 14:28:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/12 16:39:58 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/13 17:27:18 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ typedef struct	s_args
 	unsigned int	t_to_sleep;
 	int				must_eat;
 }				t_args;
-
-typedef struct	s_phi
-{
-	pthread_t		th;
-	unsigned int	tag;
-}				t_phi;
 
 typedef char	t_bool;
 enum {false, true};

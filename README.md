@@ -8,22 +8,23 @@ A Multithread 42 school's project.
 In this repository you will find two programs to find and test a sorting algorithm on a stack of int
 
 # Last changes :
-> The parsing has been done [Need_advanced_tests]  
-> The tools start to appear. 
+> There is a segfault surely caused by the alloc of t_phi struct  
+> Improvement of the main struct.
 
 # Git status return :
 
         modifié :         Makefile
-        nouveau fichier : includes/common_part/common_part.h
-        nouveau fichier : includes/common_part/common_part_struct.h
-        nouveau fichier : includes/common_part/common_part_tools.h
+        modifié :         README.md
+        modifié :         includes/common_part/common_part.h
+        modifié :         includes/common_part/common_part_struct.h
+        modifié :         includes/common_part/common_part_tools.h
         modifié :         includes/philo_one/philo_one_includes.h
-        nouveau fichier : includes/philo_one/philo_one_load.h
-        nouveau fichier : includes/philo_one/philo_one_struct.h
-        nouveau fichier : includes/philo_three/philo_three.h
-        nouveau fichier : includes/philo_three/philo_three_includes.h
-        nouveau fichier : includes/philo_two/philo_two.h
-        nouveau fichier : includes/philo_two/philo_two_includes.h
+        modifié :         includes/philo_one/philo_one_load.h
+        nouveau fichier : includes/philo_one/philo_one_routine.h
+        modifié :         includes/philo_one/philo_one_struct.h
         modifié :         srcs/philo_one/philo_one.c
-        nouveau fichier : srcs/philo_one/philo_one_parsing.c
-        nouveau fichier : srcs/tools/p_nbr_len.c
+        modifié :         srcs/philo_one/philo_one_system/philo_one_engine.c
+        modifié :         srcs/philo_one/philo_one_system/philo_one_parsing.c
+        modifié :         srcs/philo_one/routine.c
+        nouveau fichier : srcs/tools/p_put_timestamp.c
+        nouveau fichier : srcs/tools/p_putnbr.c
