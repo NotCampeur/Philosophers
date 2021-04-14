@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one_includes.h                               :+:      :+:    :+:   */
+/*   p_gettime.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 13:11:35 by user42           ###   ########.fr       */
+/*   Created: 2021/04/14 12:28:23 by user42            #+#    #+#             */
+/*   Updated: 2021/04/14 12:43:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE_INCLUDES_H
-# define PHILO_ONE_INCLUDES_H
+#include "common_part.h"
+#include "philo_one_struct.h"
 
-# include <sys/time.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <pthread.h>
-# include "common_part.h"
-# include "philo_one_struct.h"
-# include "philo_one_load.h"
-# include "philo_one_routine.h"
+long	p_get_act_time(t_phi *phi)
+{
+	long			result;
+	struct timeval	act_time;
 
-#endif
+	gettimeofday(&act_time, NULL);
+	result = (act_time.tv_sec - phi->sys->s_t.tv_sec) * 1000L
+			+ (act_time.tv_usec - phi->sys->s_t.tv_usec) / 1000L;
+	return (result);
+}

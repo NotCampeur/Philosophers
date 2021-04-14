@@ -3,46 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:36:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/13 14:26:12 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/14 16:41:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-unsigned int	get_elapsed_time(struct timeval *act_t, struct timeval pre_t)
+long	get_elapsed_time(struct timeval *act_t, struct timeval *pre_t)
 {
-	unsigned int	result;
-	time_t			act_sec;
-	suseconds_t		act_usec;
-	time_t			pre_sec;
-	suseconds_t		pre_usec;
-	
+	long result;
+
 	gettimeofday(act_t, NULL);
-	act_sec = act_t->tv_sec;
-	act_usec = act_t->tv_usec;
-	pre_sec = pre_t.tv_sec;
-	pre_usec = pre_t.tv_usec;
-	result = (act_sec - pre_sec) * 1000000;
-	result += act_usec - pre_usec;
+	result = (act_t->tv_sec - pre_t->tv_sec) * 1000L
+			+ ((act_t->tv_usec) - (pre_t->tv_usec)) / 1000L;
 	return (result);
 }
 
-t_bool	p_sleep(void)
+t_bool	p_sleep(t_phi *phi)
 {
-
+	p_put_timestamp(phi, " is sleeping\n", 0);
 	return (EXIT_SUCCESS);
 }
 
-t_bool	p_eat(struct timeval act_t, struct timeval *prev_t)
+t_bool	p_eat(t_phi *phi, long *prev_t)
 {
-	*prev_t = act_t;
+	p_put_timestamp(phi, " is eating\n", 0);
+	*prev_t = p_get_act_time(phi);
 	return (EXIT_SUCCESS);
 }
 
-t_bool	p_think(void)
+t_bool	p_think(t_phi *phi)
 {
+	p_put_timestamp(phi, " is thinking\n", 0);
 	return (EXIT_SUCCESS);
 }

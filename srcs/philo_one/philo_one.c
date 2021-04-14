@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/13 18:15:34 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/14 16:21:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,25 @@
 
 void		*live(void *arg)
 {
-	t_phi			*phi;
-	struct timeval	act_time;
-	struct timeval	prev_time;
-	t_bool			sim_end;
-	int				count;
+	t_phi	*phi;
+	long	p_time;
 
 	phi = (t_phi*)arg;
-	gettimeofday(&act_time, NULL);
-	prev_time = act_time;
-	sim_end = false;
-	count = phi->sys->args.must_eat;
-	while (get_elapsed_time(&act_time, prev_time) < phi->sys->args.t_to_die
-															&& sim_end == false)
+	p_time = 0;
+	while (p_get_act_time(phi) - p_time < phi->sys->args.t_to_die)
 	{
-		p_put_timestamp(&act_time, &phi->sys->s_t, phi->tag, " has taken a fork\n");
-		p_put_timestamp(&act_time, &phi->sys->s_t, phi->tag, " is eating\n");
-		p_eat(act_time, &prev_time);
-		p_put_timestamp(&act_time, &phi->sys->s_t, phi->tag, " is sleeping\n");
-		p_sleep();
-		p_put_timestamp(&act_time, &phi->sys->s_t, phi->tag, " is thinking\n");
-		p_think();
-		if (count > 0)
+		p_put_timestamp(phi, " has taken a fork\n", 0);
+		p_eat(phi, &p_time);
+		if (phi->sys->args.must_eat > 0)
 		{
-			count--;
-			if (count == 0)
-				sim_end = true;
+			phi->sys->args.must_eat--;
+			if (phi->sys->args.must_eat == 0)
+				return (NULL);
 		}
+		p_sleep(phi);
+		p_think(phi);
 	}
-	if (sim_end == true)
-		write(1, "Simulation ended whitout dying\n", 32);
-	else
-		p_put_timestamp(&act_time, &phi->sys->s_t, phi->tag, " died\n");
+	p_put_timestamp(phi, " died\n", 1);
 	return (NULL);
 }
 
@@ -57,7 +44,7 @@ static void	test_thread(t_phi *phi)
 	while (i < phi->sys->args.phi_nb)
 	{
 		phi[i].tag = i;
-		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)phi);
+		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i++;
 	}
 	i = 0;
@@ -72,9 +59,9 @@ int			main(int ac, char *av[])
 {
 	t_sys	system;
 	t_phi	*philosophers;
-	
+
 	philosophers = NULL;
-	if (load_program(ac, av, &system, philosophers) == EXIT_FAILURE)
+	if (load_program(ac, av, &system, &philosophers) == EXIT_FAILURE)
 		return (clean_exit(philosophers, EXIT_FAILURE));
 	test_thread(philosophers);
 	clean_exit(philosophers, EXIT_SUCCESS);
