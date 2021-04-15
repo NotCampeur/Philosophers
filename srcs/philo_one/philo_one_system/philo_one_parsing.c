@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:00:01 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/13 17:56:05 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/15 11:34:54 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int					parse_args(int ac, char *av[])
 		return (EXIT_FAILURE);
 	}
 	if (p_atoi(av[1]) < 1 || p_atoi(av[2]) < 60 || p_atoi(av[3]) < 60
-														|| p_atoi(av[4]) < 60)
+			|| p_atoi(av[4]) < 60 || (ac == 6 && p_atoi(av[5]) == 0))
 	{
 		write(2, "Arguments are not suitable\n", 28);
 		return (EXIT_FAILURE);

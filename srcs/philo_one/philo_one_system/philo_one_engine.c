@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one_engine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 10:59:50 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 16:39:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/15 11:46:09 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,28 @@ static pthread_t		*init_philosophers(t_sys *system)
 	return (res);
 }
 
-static pthread_mutex_t	*init_mutexes(t_sys *system)
+static void				init_mutexes(t_sys *system)
 {
-	pthread_mutex_t	*res;
+	pthread_mutex_t	*m_fork;
+	pthread_mutex_t	*m_write;
 	unsigned int	i;
 
-	res = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+	m_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 												* (system->nb_fork));
+	m_write = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	i = 0;
-	if (res == NULL)
-		return (NULL);
-	memset(res, 0, sizeof(*res));
+	if (m_fork == NULL || m_write == NULL)
+		return ;
+	memset(m_fork, 0, sizeof(pthread_mutex_t) * (system->nb_fork));
+	memset(m_write, 0, sizeof(pthread_mutex_t));
 	while (i < system->nb_fork)
 	{
-		pthread_mutex_init(&(res[i]), NULL);
+		pthread_mutex_init(&(m_fork[i]), NULL);
 		i++;
 	}
-	return (res);
+	pthread_mutex_init(m_write, NULL);
+	system->m_fork = m_fork;
+	system->m_write = m_write;
 }
 
 int						load_program(int ac, char *av[]
@@ -71,11 +76,12 @@ int						load_program(int ac, char *av[]
 	system->phi = init_philosophers(system);
 	if (system->phi == NULL)
 		return (EXIT_FAILURE);
-	system->m_fork = init_mutexes(system);
-	if (system->m_fork == NULL)
+	init_mutexes(system);
+	if (system->m_fork == NULL || system->m_write == NULL)
 		return (EXIT_FAILURE);
-	pthread_mutex_init(&system->m_write, NULL);
 	gettimeofday(&system->s_t, NULL);
+	system->b_dead = (t_bool*)malloc(sizeof(t_bool));
+	*system->b_dead = false;
 	while (i++ < system->args.phi_nb)
 	{
 		(*phi)[i - 1].sys = (t_sys*)malloc(sizeof(t_sys));
@@ -87,24 +93,25 @@ int						load_program(int ac, char *av[]
 int						clean_exit(t_phi *phi, int ret)
 {
 	unsigned int	i;
-	unsigned int	j;
 	unsigned int	phi_nb;
 
 	i = 0;
 	if (phi != NULL)
 	{
-		j = 0;
 		phi_nb = phi->sys->args.phi_nb;
-		while (j < phi[i].sys->nb_fork)
+		while (i < phi[0].sys->nb_fork)
 		{
-			pthread_mutex_destroy(&(phi[i].sys->m_fork[j]));
-			j++;
+			pthread_mutex_destroy(&(phi[0].sys->m_fork[i]));
+			i++;
 		}
+		i = 0;
+		p_clean_free((void**)&phi[i].sys->b_dead);
 		p_clean_free((void**)&phi[i].sys->m_fork);
 		p_clean_free((void**)&phi[i].sys->phi);
+		pthread_mutex_destroy(phi[i].sys->m_write);
+		p_clean_free((void**)&phi[i].sys->m_write);
 		while (i < phi_nb)
 		{
-			pthread_mutex_destroy(&phi[i].sys->m_write);
 			p_clean_free((void**)&phi[i].sys);
 			i++;
 		}

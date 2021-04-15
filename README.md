@@ -9,24 +9,18 @@ In this repository you will find two programs to find and test a sorting algorit
 
 # Last changes :
 > The main loop is suitable  
-> Need to fill the "action" functions (eat sleep think)  
-> Norme is done.  
+> They start to act normally.
 
 # Git status return :
 
         modifié :         Makefile
-        modifié :         includes/common_part/common_part.h
-        modifié :         includes/common_part/common_part_struct.h
         modifié :         includes/common_part/common_part_tools.h
-        modifié :         includes/philo_one/philo_one_includes.h
-        modifié :         includes/philo_one/philo_one_load.h
         modifié :         includes/philo_one/philo_one_routine.h
         modifié :         includes/philo_one/philo_one_struct.h
         modifié :         srcs/philo_one/philo_one.c
         modifié :         srcs/philo_one/philo_one_system/philo_one_engine.c
+        modifié :         srcs/philo_one/philo_one_system/philo_one_parsing.c
         modifié :         srcs/philo_one/routine.c
-        nouveau fichier : srcs/tools/p_clean_free.c
-        renommé :         srcs/tools/p_atoi.c -> srcs/tools/p_convert.c
-        nouveau fichier : srcs/tools/p_gettime.c
+        nouveau fichier : srcs/tools/p_check_vitals.c
         modifié :         srcs/tools/p_put_timestamp.c
-        modifié :         srcs/tools/p_putnbr.c
+        renommé :         srcs/tools/p_gettime.c -> srcs/tools/time_management.c

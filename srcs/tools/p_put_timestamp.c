@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_put_timestamp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:02:34 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 16:05:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/15 13:20:24 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ void		p_put_timestamp(t_phi *phi, char const *action, char color)
 	else
 		to_print = p_strjoin(KNRM, to_print);
 	free(pointer);
-	write(1, to_print, p_str_len(to_print));
+	pthread_mutex_lock(phi->sys->m_write);
+	if (*phi->sys->b_dead == false)
+		write(1, to_print, p_str_len(to_print));
+	pthread_mutex_unlock(phi->sys->m_write);
 	free(to_print);
 }

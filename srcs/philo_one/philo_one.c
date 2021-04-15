@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 16:21:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/15 18:00:54 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,25 @@
 void		*live(void *arg)
 {
 	t_phi	*phi;
-	long	p_time;
 
 	phi = (t_phi*)arg;
-	p_time = 0;
-	while (p_get_act_time(phi) - p_time < phi->sys->args.t_to_die)
+	phi->l_m_t = p_get_act_time(phi);
+	while (*phi->sys->b_dead == false)
 	{
-		p_put_timestamp(phi, " has taken a fork\n", 0);
-		p_eat(phi, &p_time);
-		if (phi->sys->args.must_eat > 0)
-		{
-			phi->sys->args.must_eat--;
-			if (phi->sys->args.must_eat == 0)
-				return (NULL);
-		}
-		p_sleep(phi);
 		p_think(phi);
+		p_eat(phi);
+		if (p_check_hunger(phi) == true)
+			return (NULL);
+		p_sleep(phi);
 	}
-	p_put_timestamp(phi, " died\n", 1);
 	return (NULL);
 }
 
-static void	test_thread(t_phi *phi)
+static void	start_simulation(t_phi *phi)
 {
 	unsigned int	i;
-
+	pthread_t		d_check;
+	
 	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
@@ -47,12 +41,14 @@ static void	test_thread(t_phi *phi)
 		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i++;
 	}
+	pthread_create(&d_check, NULL, p_death_check, (void*)phi);
 	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
 		pthread_join(phi->sys->phi[i], NULL);
 		i++;
 	}
+	pthread_join(d_check, NULL);
 }
 
 int			main(int ac, char *av[])
@@ -63,7 +59,7 @@ int			main(int ac, char *av[])
 	philosophers = NULL;
 	if (load_program(ac, av, &system, &philosophers) == EXIT_FAILURE)
 		return (clean_exit(philosophers, EXIT_FAILURE));
-	test_thread(philosophers);
+	start_simulation(philosophers);
 	clean_exit(philosophers, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_part_tools.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:39:25 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 16:42:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/15 17:13:56 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,20 @@ void	p_put_timestamp(t_phi *phi, char const *action, char color);
 ** get the actual time in ms since the beginning of the program.
 */
 long	p_get_act_time(t_phi *phi);
+
+/*
+** sleep until the target time or philosopher running time is reach.
+*/
+void	p_delay(t_phi *phi, long target_time);
+
+/*
+** Check if philosopher is done eating.
+*/
+t_bool	p_check_hunger(t_phi *phi);
+
+/*
+** Check if philosopher is dead waiting forks.
+*/
+void	*p_death_check(void *arg);
 
 #endif
