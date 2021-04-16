@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:39:25 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/15 17:13:56 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/16 08:42:17 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	p_delay(t_phi *phi, long target_time);
 t_bool	p_check_hunger(t_phi *phi);
 
 /*
-** Check if philosopher is dead waiting forks.
+** Check if philosophers are dead or if they are done eating.
 */
-void	*p_death_check(void *arg);
+void	*p_monitor_vitals(void *arg);
 
 #endif

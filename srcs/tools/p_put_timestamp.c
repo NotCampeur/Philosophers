@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:02:34 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/15 13:20:24 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/16 12:21:58 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,8 @@ static char	*p_itoa(long long nb)
 {
 	char		*result;
 	int			i;
-	long long	mem;
 
-	mem = nb;
-	i = 1;
-	while (mem /= 10)
-		i++;
+	i = nbr_len(nb);
 	result = malloc(sizeof(char) * (i + 1));
 	if (result == NULL)
 		return (NULL);
@@ -79,28 +75,26 @@ void		p_put_timestamp(t_phi *phi, char const *action, char color)
 {
 	char	*tmp;
 	void	*pointer;
-	char	*to_print;
+	char	*msg;
 
-	tmp = p_itoa(p_get_act_time(phi));
-	to_print = p_strjoin(tmp, " ");
-	free(tmp);
-	tmp = p_itoa(phi->tag);
-	pointer = to_print;
-	to_print = p_strjoin(to_print, tmp);
-	free(pointer);
-	free(tmp);
-	pointer = to_print;
-	to_print = p_strjoin(to_print, action);
-	free(pointer);
-	pointer = to_print;
-	if (color == 1)
-		to_print = p_strjoin(KRED, to_print);
-	else
-		to_print = p_strjoin(KNRM, to_print);
-	free(pointer);
+	if (phi->sys->b_dead == true)
+		return ;
 	pthread_mutex_lock(phi->sys->m_write);
-	if (*phi->sys->b_dead == false)
-		write(1, to_print, p_str_len(to_print));
+	tmp = p_itoa(phi->tag);
+	msg = p_strjoin(" ", tmp);
+	free(tmp);
+	pointer = msg;
+	msg = p_strjoin(msg, action);
+	free(pointer);
+	tmp = p_itoa(p_get_act_time(phi));
+	pointer = msg;
+	msg = p_strjoin(tmp, msg);
+	free(pointer);
+	free(tmp);
+	pointer = msg;
+	msg = (color == 1) ? p_strjoin(KRED, msg) : p_strjoin("", msg);
+	free(pointer);
+	write(1, msg, p_str_len(msg));
+	free(msg);
 	pthread_mutex_unlock(phi->sys->m_write);
-	free(to_print);
 }

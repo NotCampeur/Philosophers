@@ -6,24 +6,49 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:22:51 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/15 18:00:35 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/16 12:30:46 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common_part.h"
 
-t_bool	p_check_hunger(t_phi *phi)
+t_bool			p_check_hunger(t_phi *phi)
 {
 	if (phi->sys->args.must_eat > 0)
-	{
 		phi->sys->args.must_eat--;
-		if (phi->sys->args.must_eat == 0)
-			return (true);
+	return (false);
+}
+
+static t_bool	p_philo_is_dead(t_phi *phi)
+{
+	long	time;
+
+	time = p_get_act_time(phi);
+	if (time - phi->l_m_t > phi->sys->args.t_to_die)
+	{
+		phi->sys->b_dead = true;
+		pthread_mutex_lock(phi->sys->m_write);
+		printf(KRED"%ld %u died\n", time, phi->tag);
+		return (true);
 	}
 	return (false);
 }
 
-void	*p_death_check(void *arg)
+static void		*p_massacre(t_phi *phi)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < phi->sys->args.phi_nb)
+	{
+		phi[i].sys->b_dead = true;
+		i++;
+	}
+	pthread_mutex_unlock(phi->sys->m_write);
+	return (NULL);
+}
+
+void			*p_monitor_vitals(void *arg)
 {
 	unsigned int	i;
 	t_phi			*phi;
@@ -36,19 +61,15 @@ void	*p_death_check(void *arg)
 		done = true;
 		if (phi[i].sys->args.must_eat != 0)
 			done = false;
-		if (p_get_act_time(&phi[i]) - phi[i].l_m_t >= phi->sys->args.t_to_die)
-		{
-			p_put_timestamp(&phi[i], " died\n", 1);
-			*phi->sys->b_dead = true;
-			return (NULL);
-		}
+		if (p_philo_is_dead(&phi[i]) == true)
+			return (p_massacre(phi));
 		i++;
 		if (i >= phi->sys->args.phi_nb)
 		{
 			if (done == true)
 			{
 				printf(KGRN"Simulation lasted %ldms\n", p_get_act_time(phi));
-				return (NULL);
+				return (p_massacre(phi));
 			}
 			i = 0;
 		}

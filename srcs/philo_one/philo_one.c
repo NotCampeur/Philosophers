@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/15 18:00:54 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/16 12:31:31 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,21 @@ void		*live(void *arg)
 	t_phi	*phi;
 
 	phi = (t_phi*)arg;
-	phi->l_m_t = p_get_act_time(phi);
-	while (*phi->sys->b_dead == false)
-	{
-		p_think(phi);
-		p_eat(phi);
-		if (p_check_hunger(phi) == true)
-			return (NULL);
-		p_sleep(phi);
-	}
+	if (phi->l_m_t == 0L)
+		phi->l_m_t = p_get_act_time(phi);
+	p_think(phi);
+	p_eat(phi);
+	p_sleep(phi);
+	if (phi->sys->b_dead == false && phi->sys->args.must_eat != 0)
+		return (live(phi));
 	return (NULL);
 }
 
 static void	start_simulation(t_phi *phi)
 {
 	unsigned int	i;
-	pthread_t		d_check;
-	
+	pthread_t		monitor;
+
 	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
@@ -41,14 +39,14 @@ static void	start_simulation(t_phi *phi)
 		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i++;
 	}
-	pthread_create(&d_check, NULL, p_death_check, (void*)phi);
+	pthread_create(&monitor, NULL, p_monitor_vitals, (void*)phi);
 	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
 		pthread_join(phi->sys->phi[i], NULL);
 		i++;
 	}
-	pthread_join(d_check, NULL);
+	pthread_join(monitor, NULL);
 }
 
 int			main(int ac, char *av[])
@@ -56,6 +54,7 @@ int			main(int ac, char *av[])
 	t_sys	system;
 	t_phi	*philosophers;
 
+	memset(&system, 0, sizeof(t_sys));
 	philosophers = NULL;
 	if (load_program(ac, av, &system, &philosophers) == EXIT_FAILURE)
 		return (clean_exit(philosophers, EXIT_FAILURE));
