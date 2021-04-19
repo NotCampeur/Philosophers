@@ -9,19 +9,12 @@ In this repository you will find two programs to find and test a sorting algorit
 
 # Last changes :
 > Files are normed.  
-> The exit cases / prints are secured.  
-> Some functions has been adapted to recursivity.  
-> Run time optimazation need to be done.  
+> Run time optimazation has changed few things on routines function and live one.  
 
 # Git status return :
 
-        modifié :         includes/common_part/common_part_tools.h
-        modifié :         includes/philo_one/philo_one_struct.h
         modifié :         srcs/philo_one/philo_one.c
-        modifié :         srcs/philo_one/philo_one_system/philo_one_engine.c
         modifié :         srcs/philo_one/routine.c
         modifié :         srcs/tools/p_check_vitals.c
-        modifié :         srcs/tools/p_nbr_len.c
         modifié :         srcs/tools/p_put_timestamp.c
         modifié :         srcs/tools/time_management.c
-        modifié :         test.txt

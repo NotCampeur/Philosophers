@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/16 12:31:31 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/19 10:03:16 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void		*live(void *arg)
 	phi = (t_phi*)arg;
 	if (phi->l_m_t == 0L)
 		phi->l_m_t = p_get_act_time(phi);
-	p_think(phi);
 	p_eat(phi);
-	p_sleep(phi);
 	if (phi->sys->b_dead == false && phi->sys->args.must_eat != 0)
 		return (live(phi));
 	return (NULL);

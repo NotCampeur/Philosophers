@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:02:34 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/16 12:21:58 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/19 09:42:11 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void		p_put_timestamp(t_phi *phi, char const *action, char color)
 	void	*pointer;
 	char	*msg;
 
-	if (phi->sys->b_dead == true)
-		return ;
 	pthread_mutex_lock(phi->sys->m_write);
+	if (phi->sys->b_dead == true)
+		return ((void)pthread_mutex_unlock(phi->sys->m_write));
 	tmp = p_itoa(phi->tag);
 	msg = p_strjoin(" ", tmp);
 	free(tmp);
