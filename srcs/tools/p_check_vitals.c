@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:22:51 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/19 11:03:23 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/19 16:33:51 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ void			*p_monitor_vitals(void *arg)
 		{
 			if (done == true)
 			{
+				phi->sys->b_dead = true;
+				pthread_mutex_lock(phi->sys->m_write);
 				printf(KGRN"Simulation lasted %ldms\n", p_get_act_time(phi));
 				return (p_massacre(phi));
 			}
 			i = 0;
-			usleep(1000);
 		}
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:36:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/19 11:06:39 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/19 17:03:29 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool	p_take_forks(t_phi *phi, int left, int right)
 {
 	if (phi->sys->b_dead == true)
 		return (false);
-	if (phi->tag % 2 == 0)
+	if (phi->tag % 2 == 0 && (phi->sys->args.phi_nb % 2 == 1 && phi->tag == phi->sys->args.phi_nb - 1 && phi->sys->eat % 2 == 0))
 	{
 		pthread_mutex_lock(&phi->sys->m_fork[left]);
 		if (phi->sys->b_dead == true)
@@ -59,7 +59,7 @@ t_bool	p_eat(t_phi *phi)
 	{
 		phi->l_m_t = p_get_act_time(phi);
 		p_put_timestamp(phi, " is eating\n", 0);
-		// usleep(phi->sys->args.t_to_eat);
+		phi->sys->eat++;
 		p_delay(phi, phi->l_m_t + phi->sys->args.t_to_eat);
 	}
 	pthread_mutex_unlock(&phi->sys->m_fork[left]);
@@ -69,7 +69,6 @@ t_bool	p_eat(t_phi *phi)
 		return (false);
 	p_put_timestamp(phi, " is sleeping\n", 0);
 	p_delay(phi, p_get_act_time(phi) + phi->sys->args.t_to_sleep);
-	// usleep(phi->sys->args.t_to_sleep);
 	return (true);
 }
 

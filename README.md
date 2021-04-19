@@ -8,13 +8,13 @@ A Multithread 42 school's project.
 In this repository you will find two programs to find and test a sorting algorithm on a stack of int
 
 # Last changes :
-> Files are normed.  
-> Run time optimazation has changed few things on routines function and live one.  
+> Norme need to be done on two files.  
+> The standard test seems to work, when philosophers are odd, one is ambidestrous.  
 
 # Git status return :
 
-        modifié :         srcs/philo_one/philo_one.c
-        modifié :         srcs/philo_one/routine.c
-        modifié :         srcs/tools/p_check_vitals.c
-        modifié :         srcs/tools/p_put_timestamp.c
-        modifié :         srcs/tools/time_management.c
+        modified:   includes/philo_one/philo_one_struct.h
+        modified:   srcs/philo_one/philo_one.c
+        modified:   srcs/philo_one/philo_one_system/philo_one_engine.c
+        modified:   srcs/philo_one/routine.c
+        modified:   srcs/tools/p_check_vitals.c
