@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   common_part_struct.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 14:28:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 11:12:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/20 12:11:48 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMON_PART_STRUCT_H
 # define COMMON_PART_STRUCT_H
-
-# include <pthread.h>
 
 typedef struct	s_args
 {

@@ -6,7 +6,7 @@
 #    By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 11:13:40 by ldutriez          #+#    #+#              #
-#    Updated: 2021/04/20 10:52:52 by ldutriez         ###   ########.fr        #
+#    Updated: 2021/04/20 15:49:39 by ldutriez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,14 @@ OBJ_ONE_DIR = objs/philo_one
 OBJ_TWO_DIR		= objs/philo_two
 OBJ_THREE_DIR	= objs/philo_three
 
-SRCS_ONE		=	philo_one.c routine.c philo_one_parsing.c philo_one_engine.c \
-					p_nbr_len.c p_convert.c p_put_timestamp.c p_putnbr.c time_management.c \
-					p_clean_free.c p_check_vitals.c
+COMMON_SRCS		=	p_len.c p_convert.c p_put_timestamp.c p_putnbr.c time_management.c \
+					p_clean_free.c philosophers_parsing.c p_hunger_check.c
 
-SRCS_TWO		=	philo_two.c
+SRCS_ONE		=	philo_one.c p_routine_one.c philo_one_engine.c p_check_vitals_one.c $(COMMON_SRCS)
 
-SRCS_THREE		=	philo_three.c
+SRCS_TWO		=	philo_two.c p_routine_two.c philo_two_engine.c p_check_vitals_two.c $(COMMON_SRCS)
+
+SRCS_THREE		=	philo_three.c $(COMMON_SRCS)
 
 
 OBJ_ONE = $(addprefix $(OBJ_ONE_DIR)/, $(SRCS_ONE:%.c=%.o))

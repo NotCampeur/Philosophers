@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p_check_vitals.c                                   :+:      :+:    :+:   */
+/*   p_check_vitals_one.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:22:51 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 10:42:10 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:45:20 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common_part.h"
-
-t_bool			p_check_hunger(t_phi *phi)
-{
-	if (phi->sys->args.must_eat > 0)
-		phi->sys->args.must_eat--;
-	return (false);
-}
+#include "philo_one.h"
 
 static t_bool	p_philo_is_dead(t_phi *phi)
 {
 	long	time;
 
-	time = p_get_act_time(phi);
+	time = p_get_act_time(phi->sys->s_t);
 	if (time - phi->l_m_t > phi->sys->args.t_to_die)
 	{
 		phi->sys->b_dead = true;
@@ -40,7 +33,7 @@ static t_bool	p_philo_are_sated(t_phi *phi, t_bool done)
 	{
 		phi->sys->b_dead = true;
 		pthread_mutex_lock(phi->sys->m_write);
-		printf(KGRN"Simulation lasted %ldms\n", p_get_act_time(phi));
+		printf(KGRN"Simulation lasted %ldms\n", p_get_act_time(phi->sys->s_t));
 		return (true);
 	}
 	return (false);
@@ -60,7 +53,7 @@ static void		*p_massacre(t_phi *phi)
 	return (NULL);
 }
 
-void			*p_monitor_vitals(void *arg)
+void			*p_monitor_vitals_one(void *arg)
 {
 	unsigned int	i;
 	t_phi			*phi;

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one_parsing.c                                :+:      :+:    :+:   */
+/*   philosophers_parsing.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:00:01 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/15 11:34:54 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:49:12 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "common_part.h"
 
 static long long	static_ft_atoll(char *str)
 {
@@ -50,7 +50,7 @@ static t_bool		is_integer(char *str[])
 	while (str[index] != NULL)
 	{
 		value = static_ft_atoll(str[index]);
-		if (str_len(str[index]) > 11 || value > INT_MAX || value < INT_MIN)
+		if (p_str_len(str[index]) > 11 || value > INT_MAX || value < INT_MIN)
 			return (false);
 		index++;
 	}

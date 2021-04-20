@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one_includes.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:58:58 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/14 13:11:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/20 12:15:11 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h>
 # include "common_part.h"
 # include "philo_one_struct.h"
+# include "philo_one_tools.h"
 # include "philo_one_load.h"
 # include "philo_one_routine.h"
 

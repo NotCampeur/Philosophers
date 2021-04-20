@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_two_includes.h                               :+:      :+:    :+:   */
+/*   p_len.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 14:42:48 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 14:31:36 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/12 16:37:21 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/20 13:35:44 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TWO_INCLUDES_H
-# define PHILO_TWO_INCLUDES_H
+#include "common_part.h"
 
-# include <sys/time.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <pthread.h>
-# include <semaphore.h>
-# include "common_part.h"
-# include "philo_two_struct.h"
-# include "philo_two_tools.h"
-# include "philo_two_load.h"
-# include "philo_two_routine.h"
+int		p_nbr_len(long long int nbr)
+{
+	int	result;
 
-#endif
+	result = 1;
+	nbr = (nbr < 0) ? nbr * -1 : nbr;
+	while (nbr >= 10)
+	{
+		nbr /= 10;
+		result++;
+	}
+	return (result);
+}
+
+size_t	p_str_len(char const *str)
+{
+	size_t	result;
+
+	result = 0;
+	if (str != NULL)
+		while (str[result] != '\0')
+			result++;
+	return (result);
+}

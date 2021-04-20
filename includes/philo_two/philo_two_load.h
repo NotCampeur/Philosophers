@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p_nbr_len.c                                        :+:      :+:    :+:   */
+/*   philo_two_load.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 16:37:21 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/16 10:41:18 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/12 16:04:38 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/20 11:57:39 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common_part.h"
+#ifndef PHILO_TWO_LOAD_H
+# define PHILO_TWO_LOAD_H
 
-int	nbr_len(long long int nbr)
-{
-	int	result;
+/*
+**	Init the system by filling system->args, system->phi, system->fork
+*/
+int	load_program(int ac, char *av[], t_sys *system, t_phi **phi);
 
-	result = 1;
-	nbr = (nbr < 0) ? nbr * -1 : nbr;
-	while (nbr >= 10)
-	{
-		nbr /= 10;
-		result++;
-	}
-	return (result);
-}
+/*
+**	Will free what need to be just before the exit.
+**
+**	Return ret
+*/
+int	clean_exit(t_phi *phi, int ret);
 
-int	str_len(char *str)
-{
-	int result;
-
-	result = 0;
-	while (str[result] != '\0')
-		result++;
-	return (result);
-}
+#endif

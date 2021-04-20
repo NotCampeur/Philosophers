@@ -6,23 +6,11 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:02:34 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/19 09:42:11 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:37:09 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common_part.h"
-#include "philo_one_struct.h"
-
-size_t		p_str_len(char const *str)
-{
-	size_t	result;
-
-	result = 0;
-	if (str != NULL)
-		while (str[result] != '\0')
-			result++;
-	return (result);
-}
 
 static char	*p_strjoin(char const *str1, char const *str2)
 {
@@ -57,7 +45,7 @@ static char	*p_itoa(long long nb)
 	char		*result;
 	int			i;
 
-	i = nbr_len(nb);
+	i = p_nbr_len(nb);
 	result = malloc(sizeof(char) * (i + 1));
 	if (result == NULL)
 		return (NULL);
@@ -71,22 +59,20 @@ static char	*p_itoa(long long nb)
 	return (result);
 }
 
-void		p_put_timestamp(t_phi *phi, char const *action, char color)
+void		p_put_timestamp(long act_time, unsigned int id
+											, char const *action, char color)
 {
 	char	*tmp;
 	void	*pointer;
 	char	*msg;
 
-	pthread_mutex_lock(phi->sys->m_write);
-	if (phi->sys->b_dead == true)
-		return ((void)pthread_mutex_unlock(phi->sys->m_write));
-	tmp = p_itoa(phi->tag);
+	tmp = p_itoa(id);
 	msg = p_strjoin(" ", tmp);
 	free(tmp);
 	pointer = msg;
 	msg = p_strjoin(msg, action);
 	free(pointer);
-	tmp = p_itoa(p_get_act_time(phi));
+	tmp = p_itoa(act_time);
 	pointer = msg;
 	msg = p_strjoin(tmp, msg);
 	free(pointer);
@@ -96,5 +82,4 @@ void		p_put_timestamp(t_phi *phi, char const *action, char color)
 	free(pointer);
 	write(1, msg, p_str_len(msg));
 	free(msg);
-	pthread_mutex_unlock(phi->sys->m_write);
 }
