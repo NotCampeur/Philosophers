@@ -6,7 +6,7 @@
 #    By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 11:13:40 by ldutriez          #+#    #+#              #
-#    Updated: 2021/04/15 13:37:25 by ldutriez         ###   ########.fr        #
+#    Updated: 2021/04/20 10:52:52 by ldutriez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,19 +90,19 @@ show:
 #OBJECTS 
 
 $(OBJ_ONE_DIR)/%.o : %.c
-				@echo -n "Compiling $(_YELLOW)$@$(_WHITE) ... "
+				@echo "Compiling $(_YELLOW)$@$(_WHITE) ... \c"
 				@mkdir -p $(OBJ_ONE_DIR)
 				@$(CC) $(CFLAGS) $(IFLAGS_ONE) -o $@ -c $<
 				@echo "$(_GREEN)DONE$(_WHITE)"
 
 $(OBJ_TWO_DIR)/%.o : %.c
-				@echo -n "Compiling $(_YELLOW)$@$(_WHITE) ... "
+				@echo "Compiling $(_YELLOW)$@$(_WHITE) ... \c"
 				@mkdir -p $(OBJ_TWO_DIR)
 				@$(CC) $(CFLAGS) $(IFLAGS_TWO) -o $@ -c $<
 				@echo "$(_GREEN)DONE$(_WHITE)"
 
 $(OBJ_THREE_DIR)/%.o : %.c
-				@echo -n "Compiling $(_YELLOW)$@$(_WHITE) ... "
+				@echo "Compiling $(_YELLOW)$@$(_WHITE) ... \c"
 				@mkdir -p $(OBJ_THREE_DIR)
 				@$(CC) $(CFLAGS) $(IFLAGS_THREE) -o $@ -c $<
 				@echo "$(_GREEN)DONE$(_WHITE)"
@@ -110,17 +110,17 @@ $(OBJ_THREE_DIR)/%.o : %.c
 #EXECUTABLE 
 
 $(NAME_ONE): 	$(INC_ONE_DIR) $(OBJ_ONE) Makefile
-				@echo -n "-----\nCreating Executable $(_YELLOW)$@$(_WHITE) ... "
+				@echo "-----\nCreating Executable $(_YELLOW)$@$(_WHITE) ... \c"
 				@$(CC) $(CFLAGS) $(OBJ_ONE) $(LFLAGS) -o $(NAME_ONE)
 				@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
 $(NAME_TWO):	$(INC_TWO_DIR) $(OBJ_TWO) Makefile
-				@echo -n "-----\nCreating Executable $(_YELLOW)$@$(_WHITE) ... "
+				@echo "-----\nCreating Executable $(_YELLOW)$@$(_WHITE) ... \c"
 				@$(CC) $(CFLAGS) $(OBJ_TWO) $(LFLAGS) -o $(NAME_TWO)
 				@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
 $(NAME_THREE):	$(INC_THREE_DIR) $(OBJ_THREE) Makefile
-				@echo -n "-----\nCreating Executable $(_YELLOW)$@$(_WHITE) ... "
+				@echo "-----\nCreating Executable $(_YELLOW)$@$(_WHITE) ... \c"
 				@$(CC) $(CFLAGS) $(OBJ_THREE) $(LFLAGS) -o $(NAME_THREE)
 				@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
@@ -129,13 +129,13 @@ $(NAME_THREE):	$(INC_THREE_DIR) $(OBJ_THREE) Makefile
 re:				fclean all
 
 clean:
-				@echo -n "$(_WHITE)Deleting Objects Directory $(_YELLOW)obj$(_WHITE) ... "
+				@echo "$(_WHITE)Deleting Objects Directory $(_YELLOW)obj$(_WHITE) ... \c"
 				@rm -rf objs
 				@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
 fclean:			clean
-				@echo -n "Deleting Binaries Files $(_YELLOW)$(NAME_ONE)" \
-				"$(_WHITE), $(_YELLOW)$(NAME_TWO)$(_WHITE) & $(_YELLOW)$(NAME_THREE)$(_WHITE)... "
+				@echo "Deleting Binaries Files $(_YELLOW)$(NAME_ONE)" \
+				"$(_WHITE), $(_YELLOW)$(NAME_TWO)$(_WHITE) & $(_YELLOW)$(NAME_THREE)$(_WHITE)... \c"
 				@rm -f $(NAME_ONE) $(NAME_TWO) $(NAME_THREE)
 				@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 

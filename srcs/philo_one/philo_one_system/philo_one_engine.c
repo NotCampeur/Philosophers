@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 10:59:50 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/19 17:02:45 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/20 09:43:59 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int						load_program(int ac, char *av[]
 		return (EXIT_FAILURE);
 	gettimeofday(&system->s_t, NULL);
 	system->b_dead = false;
-	system->eat = 0;
 	while (i < system->args.phi_nb)
 	{
 		(*phi)[i].sys = (t_sys*)malloc(sizeof(t_sys));
