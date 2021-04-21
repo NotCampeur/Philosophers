@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:02:34 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 15:37:09 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/21 17:49:05 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		p_put_timestamp(long act_time, unsigned int id
 	free(pointer);
 	free(tmp);
 	pointer = msg;
-	msg = (color == 1) ? p_strjoin(KRED, msg) : p_strjoin("", msg);
+	msg = (color == 1) ? p_strjoin(KRED, msg) : p_strjoin(KNRM, msg);
 	free(pointer);
 	write(1, msg, p_str_len(msg));
 	free(msg);

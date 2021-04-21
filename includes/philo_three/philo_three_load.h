@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_three_includes.h                             :+:      :+:    :+:   */
+/*   philo_three_load.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 14:41:55 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 11:18:43 by ldutriez         ###   ########.fr       */
+/*   Created: 2021/04/12 16:04:38 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/21 15:59:11 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_THREE_INCLUDES_H
-# define PHILO_THREE_INCLUDES_H
+#ifndef PHILO_THREE_LOAD_H
+# define PHILO_THREE_LOAD_H
 
-# include <sys/time.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <pthread.h>
-# include <semaphore.h>
-# include "common_part.h"
-# include "philo_three_struct.h"
-# include "philo_three_tools.h"
-# include "philo_three_load.h"
-# include "philo_three_routine.h"
+/*
+**	Init the system by filling system->args, system->phi, system->fork
+*/
+int		load_program(int ac, char *av[], t_sys *system, t_phi **phi);
+
+/*
+**	Will free what need to be just before the exit.
+**
+**	Return ret
+*/
+void	clean_exit(t_phi *phi, int ret);
 
 #endif

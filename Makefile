@@ -6,7 +6,7 @@
 #    By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 11:13:40 by ldutriez          #+#    #+#              #
-#    Updated: 2021/04/20 15:49:39 by ldutriez         ###   ########.fr        #
+#    Updated: 2021/04/20 17:50:27 by ldutriez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS_ONE		=	philo_one.c p_routine_one.c philo_one_engine.c p_check_vitals_one.c 
 
 SRCS_TWO		=	philo_two.c p_routine_two.c philo_two_engine.c p_check_vitals_two.c $(COMMON_SRCS)
 
-SRCS_THREE		=	philo_three.c $(COMMON_SRCS)
+SRCS_THREE		=	philo_three.c p_routine_three.c philo_three_engine.c p_check_vitals_three.c $(COMMON_SRCS)
 
 
 OBJ_ONE = $(addprefix $(OBJ_ONE_DIR)/, $(SRCS_ONE:%.c=%.o))
