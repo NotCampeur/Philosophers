@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three_engine.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:35:07 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 18:15:48 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/21 23:19:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static t_bool			init_semaphores(t_sys *system)
 	system->s_write = sem_open("write", O_CREAT, 777, 1);
 	sem_unlink("goal");
 	system->s_goal = sem_open("goal", O_CREAT, 777, 0);
+	sem_unlink("death");
+	system->s_death = sem_open("death", O_CREAT, 777, 0);
 	sem_unlink("l_m_t");
 	system->s_l_m_t = sem_open("l_m_t", O_CREAT, 777, 1);
 	return (true);
@@ -59,7 +61,6 @@ int						load_program(int ac, char *av[]
 	{
 		(*phi)[i].sys = (t_sys*)malloc(sizeof(t_sys));
 		*(*phi)[i].sys = *system;
-		(*phi)[i].done_eating = false;
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -78,6 +79,7 @@ void					clean_exit(t_phi *phi, int ret)
 		sem_close(phi->sys->s_write);
 		sem_close(phi->sys->s_l_m_t);
 		sem_close(phi->sys->s_goal);
+		sem_close(phi->sys->s_death);
 		while (i < phi_nb)
 		{
 			p_clean_free((void**)&phi[i].sys);

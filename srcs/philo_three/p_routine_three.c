@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_routine_three.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:36:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 18:19:03 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/21 23:05:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	p_delay_three(t_phi *phi, long target_time)
 
 t_bool	p_sleep(t_phi *phi)
 {
-	if (phi->sys->b_dead == true || phi->done_eating == true)
+	if (phi->sys->b_dead == true)
 		return (false);
 	sem_wait(phi->sys->s_write);
-	if (phi->sys->b_dead == false && phi->done_eating == false)
+	if (phi->sys->b_dead == false)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 												, " is sleeping\n", 0);
 	sem_post(phi->sys->s_write);
@@ -36,19 +36,19 @@ t_bool	p_sleep(t_phi *phi)
 
 t_bool	p_take_forks(t_phi *phi)
 {
-	if (phi->sys->b_dead == true || phi->done_eating == true)
+	if (phi->sys->b_dead == true)
 		return (false);
 	sem_wait(phi->sys->s_fork);
 	sem_wait(phi->sys->s_write);
-	if (phi->sys->b_dead == false && phi->done_eating == false)
+	if (phi->sys->b_dead == false)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " has taken a fork\n", 0);
 	sem_post(phi->sys->s_write);
-	if (phi->sys->b_dead == true || phi->done_eating == true)
+	if (phi->sys->b_dead == true)
 		return (false);
 	sem_wait(phi->sys->s_fork);
 	sem_wait(phi->sys->s_write);
-	if (phi->sys->b_dead == false  && phi->done_eating == false)
+	if (phi->sys->b_dead == false)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " has taken a fork\n", 0);
 	sem_post(phi->sys->s_write);
@@ -58,13 +58,13 @@ t_bool	p_take_forks(t_phi *phi)
 t_bool	p_eat(t_phi *phi)
 {
 	p_take_forks(phi);
-	if (phi->sys->b_dead == false && phi->done_eating == false)
+	if (phi->sys->b_dead == false)
 	{
 		sem_wait(phi->sys->s_l_m_t);
 		phi->l_m_t = p_get_act_time(phi->sys->s_t);
 		sem_post(phi->sys->s_l_m_t);
 		sem_wait(phi->sys->s_write);
-		if (phi->sys->b_dead == false && phi->done_eating == false)
+		if (phi->sys->b_dead == false)
 			p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " is eating\n", 0);
 		sem_post(phi->sys->s_write);
@@ -72,14 +72,14 @@ t_bool	p_eat(t_phi *phi)
 	}
 	sem_post(phi->sys->s_fork);
 	sem_post(phi->sys->s_fork);
-	p_check_hunger(&phi->sys->args.must_eat);
+	p_check_hunger_three(phi);
 	return (true);
 }
 
 t_bool	p_think(t_phi *phi)
 {
 	sem_wait(phi->sys->s_write);
-	if (phi->sys->b_dead == false && phi->done_eating == false)
+	if (phi->sys->b_dead == false)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " is thinking\n", 0);
 	sem_post(phi->sys->s_write);

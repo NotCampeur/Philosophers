@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 11:13:40 by ldutriez          #+#    #+#              #
-#    Updated: 2021/04/20 17:50:27 by ldutriez         ###   ########.fr        #
+#    Updated: 2021/04/21 23:00:44 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,14 @@ OBJ_THREE_DIR	= objs/philo_three
 COMMON_SRCS		=	p_len.c p_convert.c p_put_timestamp.c p_putnbr.c time_management.c \
 					p_clean_free.c philosophers_parsing.c p_hunger_check.c
 
-SRCS_ONE		=	philo_one.c p_routine_one.c philo_one_engine.c p_check_vitals_one.c $(COMMON_SRCS)
+SRCS_ONE		=	philo_one.c p_routine_one.c philo_one_engine.c \
+					p_check_vitals_one.c $(COMMON_SRCS)
 
-SRCS_TWO		=	philo_two.c p_routine_two.c philo_two_engine.c p_check_vitals_two.c $(COMMON_SRCS)
+SRCS_TWO		=	philo_two.c p_routine_two.c philo_two_engine.c \
+					p_check_vitals_two.c $(COMMON_SRCS)
 
-SRCS_THREE		=	philo_three.c p_routine_three.c philo_three_engine.c p_check_vitals_three.c $(COMMON_SRCS)
+SRCS_THREE		=	philo_three.c p_routine_three.c philo_three_engine.c \
+					p_check_vitals_three.c p_hunger_check_three.c $(COMMON_SRCS)
 
 
 OBJ_ONE = $(addprefix $(OBJ_ONE_DIR)/, $(SRCS_ONE:%.c=%.o))

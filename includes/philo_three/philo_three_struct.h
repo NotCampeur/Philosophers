@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three_struct.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 17:44:19 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 18:15:03 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/21 23:19:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_sys
 	sem_t			*s_write;
 	sem_t			*s_l_m_t;
 	sem_t			*s_goal;
+	sem_t			*s_death;
 	unsigned int	nb_fork;
 	struct timeval	s_t;
 	t_bool			b_dead;
@@ -44,7 +45,6 @@ typedef struct		s_sys
 **	unsigned int	tag is the index given to the philosopher.
 **	t_sys			*sys is a reference to the t_sys structure.
 **	long			l_m_t stock the "last_meal_time" of the philosopher.
-**	t_bool			done_eating stock the fact that phil eat enought.
 */
 typedef struct		s_phi
 {
@@ -52,7 +52,6 @@ typedef struct		s_phi
 	t_sys			*sys;
 	long			l_m_t;
 	pid_t			pid;
-	t_bool			done_eating;
 }					t_phi;
 
 #endif

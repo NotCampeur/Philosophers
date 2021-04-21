@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three_includes.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 14:41:55 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 11:18:43 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/21 22:26:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define PHILO_THREE_INCLUDES_H
 
 # include <sys/time.h>
+# include <sys/types.h>
+# include <signal.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <signal.h>
 # include <unistd.h>

@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   p_check_vitals_three.c                             :+:      :+:    :+:   */
+/*   p_hunger_check_three.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/15 13:22:51 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 23:28:40 by user42           ###   ########.fr       */
+/*   Created: 2021/04/20 14:25:00 by ldutriez          #+#    #+#             */
+/*   Updated: 2021/04/21 22:58:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void		*p_monitor_vitals(void *arg)
+t_bool			p_check_hunger_three(t_phi *phi)
 {
-	t_phi	*phi;
-	long	time;
-
-	phi = (t_phi*)arg;
-	while (1)
+	if (phi->sys->args.must_eat > 0)
 	{
-		time = p_get_act_time(phi->sys->s_t);
-		sem_wait(phi->sys->s_l_m_t);
-		if (time - phi->l_m_t > phi->sys->args.t_to_die)
+		phi->sys->args.must_eat--;
+		if (phi->sys->args.must_eat == 0)
 		{
-			phi->sys->b_dead = true;
 			sem_wait(phi->sys->s_write);
-			printf(KRED"%ld %u died\n", time, phi->tag);
-			sem_post(phi->sys->s_death);
-			return (NULL);
+			p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
+													, " is sated\n", 0);
+			sem_post(phi->sys->s_write);
+			sem_post(phi->sys->s_goal);
 		}
-		sem_post(phi->sys->s_l_m_t);
-		usleep(50);
 	}
-	return (NULL);
+	return (false);
 }
