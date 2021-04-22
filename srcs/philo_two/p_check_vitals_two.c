@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:22:51 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 13:57:09 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 16:19:37 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static t_bool	p_philo_is_dead(t_phi *phi)
 		phi->sys->b_dead = true;
 		sem_wait(phi->sys->s_write);
 		printf(KRED"%ld %u died\n", time, phi->tag);
-		sem_post(phi->sys->s_write);
 		return (true);
 	}
 	return (false);
@@ -35,7 +34,6 @@ static t_bool	p_philo_are_sated(t_phi *phi, t_bool done)
 		phi->sys->b_dead = true;
 		sem_wait(phi->sys->s_write);
 		printf(KGRN"Simulation lasted %ldms\n", p_get_act_time(phi->sys->s_t));
-		sem_post(phi->sys->s_write);
 		return (true);
 	}
 	return (false);

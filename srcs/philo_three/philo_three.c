@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:35:05 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/22 11:27:01 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 16:05:57 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ void		*live(t_phi *phi)
 	p_sleep(phi);
 	if (phi->sys->b_dead == false && phi->sys->args.must_eat != 0)
 		return (live(phi));
-	else if (phi->sys->b_dead == true)
-		exit(EXIT_FAILURE);
-	else if (phi->sys->args.must_eat == 0)
-		exit(EXIT_SUCCESS);
+	else
+		while (1)
+			;
 	return (NULL);
 }
 
@@ -47,16 +46,11 @@ static void	*p_each_philo_are_sated(void *arg)
 		sem_wait(phi->sys->s_goal);
 		i++;
 	}
+	if (phi->sys->b_dead == true)
+		return (NULL);
 	sem_wait(phi->sys->s_write);
 	printf(KGRN"%ld Everyone sat\n", p_get_act_time(phi->sys->s_t));
-	sem_post(phi->sys->s_write);
-	i = 0;
-	while (i < phi->sys->args.phi_nb)
-	{
-		kill(phi[i].pid, SIGKILL);
-		i++;
-	}
-	clean_exit(phi, EXIT_SUCCESS);
+	sem_post(phi->sys->s_death);
 	return (NULL);
 }
 
@@ -68,24 +62,31 @@ static void	*p_butcher(void *arg)
 	i = 0;
 	phi = (t_phi*)arg;
 	sem_wait(phi->sys->s_death);
+	phi->sys->b_dead = true;
+	while (i < phi->sys->args.phi_nb)
+	{
+		sem_post(phi->sys->s_goal);
+		i++;
+	}
+	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
 		kill(phi[i].pid, SIGKILL);
 		i++;
 	}
-	clean_exit(phi, EXIT_FAILURE);
 	return (NULL);
 }
 
-static void	start_simulation(t_phi *phi)
+static void	start_simulation(t_phi *phi
+						, pthread_t *death_catcher, pthread_t *goal_monitor)
 {
 	unsigned int	i;
 	t_bool			even;
-	pthread_t		monitor_global;
-	pthread_t		death_catcher;
 
 	i = 0;
 	even = false;
+	pthread_create(death_catcher, NULL, p_butcher, (void*)phi);
+	pthread_create(goal_monitor, NULL, p_each_philo_are_sated, (void*)phi);
 	while (i < phi->sys->args.phi_nb)
 	{
 		phi[i].pid = fork();
@@ -101,27 +102,22 @@ static void	start_simulation(t_phi *phi)
 			i = 1;
 		}
 	}
-	pthread_create(&death_catcher, NULL, p_butcher, (void*)phi);
-	pthread_create(&monitor_global, NULL, p_each_philo_are_sated, (void*)phi);
 }
 
 int			main(int ac, char *av[])
 {
 	t_sys			system;
 	t_phi			*philosophers;
-	unsigned int	i;
+	pthread_t		death_catcher;
+	pthread_t		goal_monitor;
 
-	i = 0;
 	memset(&system, 0, sizeof(t_sys));
 	philosophers = NULL;
 	if (load_program(ac, av, &system, &philosophers) == EXIT_FAILURE)
 		clean_exit(philosophers, EXIT_FAILURE);
-	start_simulation(philosophers);
-	while (i < philosophers->sys->args.phi_nb)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}
+	start_simulation(philosophers, &death_catcher, &goal_monitor);
+	pthread_join(death_catcher, NULL);
+	pthread_join(goal_monitor, NULL);
 	clean_exit(philosophers, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

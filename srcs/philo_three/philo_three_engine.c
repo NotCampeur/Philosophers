@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:35:07 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/22 11:24:36 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 14:01:18 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ static t_bool			init_semaphores(t_sys *system)
 	system->s_death = sem_open("death", O_CREAT, 777, 0);
 	sem_unlink("l_m_t");
 	system->s_l_m_t = sem_open("l_m_t", O_CREAT, 777, 1);
+	if (system->s_fork == SEM_FAILED || system->s_write == SEM_FAILED
+		|| system->s_goal == SEM_FAILED || system->s_death == SEM_FAILED
+		|| system->s_l_m_t == SEM_FAILED)
+		return (false);
 	return (true);
 }
 

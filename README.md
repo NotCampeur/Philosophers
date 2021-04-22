@@ -9,9 +9,21 @@ In this repository you will find two programs to find and test a sorting algorit
 
 # Last changes :
 > Norme is done.  
-> "AddressSanitizer: nested bug in the same thread, aborting."  
+> Philo_one got an infinit loop on EXIT_SUCCESS.  
+> Philo_two seems bug free.  
+> Philo_three seems bug free.  
 
 # Git status return :
 
-        modified:   srcs/philo_three/philo_three.c
-        modified:   srcs/philo_three/philo_three_engine.c
+        modifié :         README.md
+        nouveau fichier : philo_one
+        nouveau fichier : philo_three
+        nouveau fichier : philo_two
+        modifié :         srcs/philo_one/p_check_vitals_one.c
+        modifié :         srcs/philo_one/p_routine_one.c
+        modifié :         srcs/philo_one/philo_one.c
+        modifié :         srcs/philo_three/p_check_vitals_three.c
+        modifié :         srcs/philo_three/philo_three.c
+        modifié :         srcs/philo_three/philo_three_engine.c
+        modifié :         srcs/philo_two/p_check_vitals_two.c
+        modifié :         srcs/philo_two/philo_two_engine.c

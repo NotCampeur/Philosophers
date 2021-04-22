@@ -6,7 +6,7 @@
 /*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:35:07 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 17:10:07 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 12:42:23 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,10 @@ static t_bool			init_philosophers(t_sys *system)
 
 static t_bool			init_semaphores(t_sys *system)
 {
-	sem_t	*s_fork;
-	sem_t	*s_write;
-
 	sem_unlink("fork");
+	system->s_fork = sem_open("fork", O_CREAT, 0777, system->nb_fork);
 	sem_unlink("write");
-	s_fork = sem_open("fork", O_CREAT, 777, system->nb_fork);
-	s_write = sem_open("write", O_CREAT, 777, 1);
-	system->s_fork = s_fork;
-	system->s_write = s_write;
+	system->s_write = sem_open("write", O_CREAT, 0777, 1);
 	return (true);
 }
 
