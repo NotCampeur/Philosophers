@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:35:05 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 23:35:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/22 11:27:01 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 void		*live(t_phi *phi)
 {
+	pthread_t		monitor;
+
 	sem_wait(phi->sys->s_l_m_t);
 	if (phi->l_m_t == 0L)
+	{
+		pthread_create(&monitor, NULL, p_monitor_vitals, (void*)phi);
 		phi->l_m_t = p_get_act_time(phi->sys->s_t);
+	}
 	sem_post(phi->sys->s_l_m_t);
 	p_think(phi);
 	p_eat(phi);
@@ -75,51 +80,37 @@ static void	*p_butcher(void *arg)
 static void	start_simulation(t_phi *phi)
 {
 	unsigned int	i;
-	pthread_t		monitor;
+	t_bool			even;
 	pthread_t		monitor_global;
 	pthread_t		death_catcher;
 
 	i = 0;
+	even = false;
 	while (i < phi->sys->args.phi_nb)
 	{
 		phi[i].pid = fork();
 		if (phi[i].pid == -1)
 			clean_exit(phi, EXIT_FAILURE);
 		if (phi[i].pid == 0)
-		{
-			phi[i].tag = i;
-			pthread_create(&monitor, NULL, p_monitor_vitals, (void*)&phi[i]);
 			live(&phi[i]);
-		}
 		usleep(50);
 		i += 2;
-	}
-	i = 1;
-	while (i < phi->sys->args.phi_nb)
-	{
-		phi[i].pid = fork();
-		if (phi[i].pid == -1)
-			clean_exit(phi, EXIT_FAILURE);
-		if (phi[i].pid == 0)
+		if (i >= phi->sys->args.phi_nb && even == false)
 		{
-			phi[i].tag = i;
-			pthread_create(&monitor, NULL, p_monitor_vitals, (void*)&phi[i]);
-			live(&phi[i]);
+			even = true;
+			i = 1;
 		}
-		usleep(50);
-		i += 2;
 	}
 	pthread_create(&death_catcher, NULL, p_butcher, (void*)phi);
 	pthread_create(&monitor_global, NULL, p_each_philo_are_sated, (void*)phi);
 }
 
-int	main(int ac, char *av[])
+int			main(int ac, char *av[])
 {
 	t_sys			system;
 	t_phi			*philosophers;
 	unsigned int	i;
-//	pid_t			ret;
-	
+
 	i = 0;
 	memset(&system, 0, sizeof(t_sys));
 	philosophers = NULL;
@@ -129,8 +120,6 @@ int	main(int ac, char *av[])
 	while (i < philosophers->sys->args.phi_nb)
 	{
 		waitpid(-1, NULL, 0);
-		//if (ret != philosophers[i].pid)
-		//	kill(philosophers[i].pid, SIGKILL);
 		i++;
 	}
 	clean_exit(philosophers, EXIT_SUCCESS);

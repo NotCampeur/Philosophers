@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three_engine.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:35:07 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 23:19:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/22 11:24:36 by ldutriez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int						load_program(int ac, char *av[]
 	{
 		(*phi)[i].sys = (t_sys*)malloc(sizeof(t_sys));
 		*(*phi)[i].sys = *system;
+		(*phi)[i].tag = i;
 		i++;
 	}
 	return (EXIT_SUCCESS);
