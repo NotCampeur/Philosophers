@@ -9,9 +9,7 @@ In this repository you will find two programs to find and test a sorting algorit
 
 # Last changes :
 > Norme is done.  
-> Philo_one got an infinit loop on EXIT_SUCCESS.  
-> Philo_two seems bug free.  
-> Philo_three seems bug free.  
+> Had to implement a global to philo one and philo_two which trigger the end of the simulation.  
 
 # Git status return :
 

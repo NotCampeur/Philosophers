@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one_routine.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:53:52 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/15 18:10:32 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 21:55:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_bool	p_sleep(t_phi *phi);
 /*
 **	Philisopher will try to grab forks
 */
-t_bool	p_take_forks(t_phi *phi, int left, int right);
+t_bool	p_take_forks(t_phi *phi);
 
 /*
 **	Philisopher will eat and refresh the t_sys->args->t_to_die timer.

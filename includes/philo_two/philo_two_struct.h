@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_two_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 14:49:31 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 12:02:39 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 23:32:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 **	sem_t			*s_write refer to the semaphore used to protect the output
 **	unsigned int	nb_fork list the number of fork present.
 **	struct timeval	s_t store the start time of the program.
-**	t_bool			b_dead will keep the track of philosophers' vitals.
 */
 typedef struct		s_sys
 {
@@ -32,7 +31,6 @@ typedef struct		s_sys
 	sem_t			*s_write;
 	unsigned int	nb_fork;
 	struct timeval	s_t;
-	t_bool			b_dead;
 }					t_sys;
 
 /*

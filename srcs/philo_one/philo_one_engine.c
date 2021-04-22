@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one_engine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 10:59:50 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 17:11:01 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 21:53:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_args			get_args(int ac, char *av[])
 	return (result);
 }
 
-static t_bool			init_philosophers(t_sys *system)
+static t_bool			init_thread(t_sys *system)
 {
 	pthread_t		*phil;
 
@@ -75,14 +75,17 @@ int						load_program(int ac, char *av[]
 		return (EXIT_FAILURE);
 	memset(*phi, 0, sizeof(t_phi) * system->args.phi_nb);
 	system->nb_fork = (system->args.phi_nb == 1) ? 2 : system->args.phi_nb;
-	if (init_philosophers(system) == false || init_mutexes(system) == false)
+	if (init_thread(system) == false || init_mutexes(system) == false)
 		return (EXIT_FAILURE);
 	gettimeofday(&system->s_t, NULL);
-	system->b_dead = false;
 	while (i < system->args.phi_nb)
 	{
 		(*phi)[i].sys = (t_sys*)malloc(sizeof(t_sys));
 		*(*phi)[i].sys = *system;
+		(*phi)[i].tag = i + 1;
+		(*phi)[i].right = (*phi)[i].tag - 1;
+		(*phi)[i].left = ((*phi)[i].tag != 1) ?
+							(*phi)[i].tag - 2 : (*phi)[i].sys->nb_fork - 1;
 		i++;
 	}
 	return (EXIT_SUCCESS);

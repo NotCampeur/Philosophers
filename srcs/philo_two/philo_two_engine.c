@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_two_engine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:35:07 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/22 12:42:23 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 23:35:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ int						load_program(int ac, char *av[]
 	if (init_philosophers(system) == false || init_semaphores(system) == false)
 		return (EXIT_FAILURE);
 	gettimeofday(&system->s_t, NULL);
-	system->b_dead = false;
 	while (i < system->args.phi_nb)
 	{
 		(*phi)[i].sys = (t_sys*)malloc(sizeof(t_sys));
 		*(*phi)[i].sys = *system;
+		(*phi)[i].tag = i + 1;
 		i++;
 	}
 	return (EXIT_SUCCESS);

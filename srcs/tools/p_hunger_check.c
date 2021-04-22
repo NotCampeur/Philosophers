@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_hunger_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:25:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 15:44:42 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 21:42:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,7 @@ t_bool			p_check_hunger(int *must_eat)
 {
 	if (*must_eat > 0)
 		(*must_eat)--;
+	if (*must_eat == 0)
+		return (true);
 	return (false);
 }

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo_two.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 09:27:19 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 15:59:22 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 23:34:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
+
+t_bool	g_end;
 
 void		*live(void *arg)
 {
@@ -19,12 +21,17 @@ void		*live(void *arg)
 	phi = (t_phi*)arg;
 	if (phi->l_m_t == 0L)
 		phi->l_m_t = p_get_act_time(phi->sys->s_t);
-	p_think(phi);
-	p_eat(phi);
-	p_sleep(phi);
-	if (phi->sys->b_dead == false && phi->sys->args.must_eat != 0)
-		return (live(phi));
-	return (NULL);
+	if (p_think(phi) == false)
+		return (NULL);
+	if (p_eat(phi) == false)
+		return (NULL);
+	if (p_check_hunger(&phi->sys->args.must_eat) == true)
+		return (NULL);
+	if (p_sleep(phi) == false)
+		return (NULL);
+	if (g_end == true || phi->sys->args.must_eat == 0)
+		return (NULL);
+	return (live(phi));
 }
 
 static void	start_simulation(t_phi *phi)
@@ -35,7 +42,6 @@ static void	start_simulation(t_phi *phi)
 	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
-		phi[i].tag = i;
 		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i += 2;
 		usleep(50);
@@ -43,7 +49,6 @@ static void	start_simulation(t_phi *phi)
 	i = 1;
 	while (i < phi->sys->args.phi_nb)
 	{
-		phi[i].tag = i;
 		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i += 2;
 		usleep(50);
@@ -59,6 +64,7 @@ int			main(int ac, char *av[])
 	t_phi			*philosophers;
 	unsigned int	i;
 
+	g_end = false;
 	i = 0;
 	memset(&system, 0, sizeof(t_sys));
 	philosophers = NULL;

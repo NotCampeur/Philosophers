@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 08:57:06 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/22 18:19:25 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/22 23:34:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+t_bool	g_end;
 
 void		*live(void *arg)
 {
@@ -23,12 +25,13 @@ void		*live(void *arg)
 		return (NULL);
 	if (p_eat(phi) == false)
 		return (NULL);
+	if (p_check_hunger(&phi->sys->args.must_eat) == true)
+		return (NULL);
 	if (p_sleep(phi) == false)
 		return (NULL);
-	if (phi->sys->b_dead == false && phi->sys->args.must_eat != 0)
-		return (live(phi));
-	printf("Getting out of %35u\n", phi->tag);
-	return (NULL);
+	if (g_end == true || phi->sys->args.must_eat == 0)
+		return (NULL);
+	return (live(phi));
 }
 
 static void	start_simulation(t_phi *phi)
@@ -39,7 +42,6 @@ static void	start_simulation(t_phi *phi)
 	i = 0;
 	while (i < phi->sys->args.phi_nb)
 	{
-		phi[i].tag = i + 1;
 		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i += 2;
 		usleep(50);
@@ -47,7 +49,6 @@ static void	start_simulation(t_phi *phi)
 	i = 1;
 	while (i < phi->sys->args.phi_nb)
 	{
-		phi[i].tag = i + 1;
 		pthread_create(&(phi->sys->phi[i]), NULL, &live, (void*)&phi[i]);
 		i += 2;
 		usleep(50);
@@ -63,6 +64,7 @@ int			main(int ac, char *av[])
 	t_phi			*philosophers;
 	unsigned int	i;
 
+	g_end = false;
 	i = 0;
 	memset(&system, 0, sizeof(t_sys));
 	philosophers = NULL;
@@ -71,7 +73,6 @@ int			main(int ac, char *av[])
 	start_simulation(philosophers);
 	while (i < philosophers->sys->args.phi_nb)
 	{
-		printf("%35u is fucked dead\n", philosophers[i].tag);
 		pthread_join(philosophers->sys->phi[i], NULL);
 		i++;
 	}
