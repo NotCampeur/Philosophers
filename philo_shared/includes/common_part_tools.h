@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_part_tools.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:39:25 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/20 14:14:48 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/23 01:23:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int		parse_args(int ac, char *av[]);
 /*
 ** Print a msg formated like [act_time id action] in color defined by color.
 */
-void	p_put_timestamp(long act_time, unsigned int id
-											, char const *action, char color);
+void	p_put_timestamp(long act_time, unsigned int id, char const *action);
 
 /*
 ** get the actual time in ms since the beginning of the program.

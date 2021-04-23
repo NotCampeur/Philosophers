@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:25:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 22:58:30 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/23 01:25:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_bool			p_check_hunger_three(t_phi *phi)
 		{
 			sem_wait(phi->sys->s_write);
 			p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
-													, " is sated\n", 0);
+															, " is sated\n");
 			sem_post(phi->sys->s_write);
 			sem_post(phi->sys->s_goal);
 		}

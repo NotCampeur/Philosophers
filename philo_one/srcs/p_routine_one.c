@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:36:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/22 23:41:44 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/23 01:24:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool	p_sleep(t_phi *phi)
 		return (false);
 	pthread_mutex_lock(phi->sys->m_write);
 	if (g_end == false)
-		p_put_timestamp(a_t, phi->tag, " is sleeping\n", 0);
+		p_put_timestamp(a_t, phi->tag, " is sleeping\n");
 	pthread_mutex_unlock(phi->sys->m_write);
 	if (phi->l_m_t + phi->sys->args.t_to_die > a_t + phi->sys->args.t_to_sleep)
 		p_delay_one(phi, a_t + phi->sys->args.t_to_sleep);
@@ -49,7 +49,7 @@ t_bool	p_take_forks(t_phi *phi)
 	pthread_mutex_lock(phi->sys->m_write);
 	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
-													, " has taken a fork\n", 0);
+													, " has taken a fork\n");
 	pthread_mutex_unlock(phi->sys->m_write);
 	if (g_end == true)
 		return (pthread_mutex_unlock(&phi->sys->m_fork[phi->left]));
@@ -62,7 +62,7 @@ t_bool	p_take_forks(t_phi *phi)
 	pthread_mutex_lock(phi->sys->m_write);
 	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
-													, " has taken a fork\n", 0);
+													, " has taken a fork\n");
 	pthread_mutex_unlock(phi->sys->m_write);
 	return (true);
 }
@@ -82,7 +82,7 @@ t_bool	p_eat(t_phi *phi)
 		pthread_mutex_lock(phi->sys->m_write);
 		if (g_end == false && phi->sys->args.must_eat != 0)
 			p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
-													, " is eating\n", 0);
+													, " is eating\n");
 		pthread_mutex_unlock(phi->sys->m_write);
 		p_delay_one(phi, phi->l_m_t + phi->sys->args.t_to_eat);
 		pthread_mutex_unlock(&phi->sys->m_fork[phi->left]);
@@ -98,7 +98,7 @@ t_bool	p_think(t_phi *phi)
 	pthread_mutex_lock(phi->sys->m_write);
 	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
-														, " is thinking\n", 0);
+														, " is thinking\n");
 	pthread_mutex_unlock(phi->sys->m_write);
 	return (true);
 }

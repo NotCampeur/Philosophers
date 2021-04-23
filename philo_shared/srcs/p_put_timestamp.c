@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_put_timestamp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldutriez <ldutriez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 15:02:34 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/21 17:49:05 by ldutriez         ###   ########.fr       */
+/*   Updated: 2021/04/23 01:22:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ static char	*p_itoa(long long nb)
 	return (result);
 }
 
-void		p_put_timestamp(long act_time, unsigned int id
-											, char const *action, char color)
+void		p_put_timestamp(long act_time, unsigned int id, char const *action)
 {
 	char	*tmp;
 	void	*pointer;
@@ -77,9 +76,6 @@ void		p_put_timestamp(long act_time, unsigned int id
 	msg = p_strjoin(tmp, msg);
 	free(pointer);
 	free(tmp);
-	pointer = msg;
-	msg = (color == 1) ? p_strjoin(KRED, msg) : p_strjoin(KNRM, msg);
-	free(pointer);
 	write(1, msg, p_str_len(msg));
 	free(msg);
 }
