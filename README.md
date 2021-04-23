@@ -10,7 +10,8 @@ In this repository you will find two programs to find and test a sorting algorit
 # Last changes :
 > Norme is done.  
 > A misbehavior on philo_three about philo->tag has been fixed.  
-> The p_put_timestamp has been modified to remove the color.
+> The p_put_timestamp has been modified to remove the color.  
+> Bad eating counter on one and three.  
 
 # Git status return :
 
