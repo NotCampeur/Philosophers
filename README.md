@@ -11,7 +11,7 @@ In this repository you will find two programs to find and test a sorting algorit
 > Norme is done.  
 > A misbehavior on philo_three about philo->tag has been fixed.  
 > The p_put_timestamp has been modified to remove the color.  
-> Bad eating counter on one and three.  
+> Bad eating counter on one and two.  
 
 # Git status return :
 
