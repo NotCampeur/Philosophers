@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 10:36:00 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/23 01:25:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/25 20:38:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_bool	p_sleep(t_phi *phi)
 	if (g_end == true)
 		return (false);
 	sem_wait(phi->sys->s_write);
-	if (g_end == false)
+	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(a_t, phi->tag, " is sleeping\n");
 	sem_post(phi->sys->s_write);
 	if (phi->l_m_t + phi->sys->args.t_to_die > a_t + phi->sys->args.t_to_sleep)
@@ -47,7 +47,7 @@ t_bool	p_take_forks(t_phi *phi)
 	if (g_end == true)
 		return (sem_post(phi->sys->s_fork));
 	sem_wait(phi->sys->s_write);
-	if (g_end == false)
+	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " has taken a fork\n");
 	sem_post(phi->sys->s_write);
@@ -57,7 +57,7 @@ t_bool	p_take_forks(t_phi *phi)
 	if (g_end == true)
 		return (sem_post(phi->sys->s_fork) + sem_post(phi->sys->s_fork));
 	sem_wait(phi->sys->s_write);
-	if (g_end == false)
+	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " has taken a fork\n");
 	sem_post(phi->sys->s_write);
@@ -66,7 +66,7 @@ t_bool	p_take_forks(t_phi *phi)
 
 t_bool	p_eat(t_phi *phi)
 {
-	if (g_end == false)
+	if (g_end == false && phi->sys->args.must_eat != 0)
 	{
 		if (p_take_forks(phi) == false)
 			return (false);
@@ -74,15 +74,14 @@ t_bool	p_eat(t_phi *phi)
 		if (g_end == true)
 			return (sem_post(phi->sys->s_fork) + sem_post(phi->sys->s_fork));
 		sem_wait(phi->sys->s_write);
-		if (g_end == false)
+		if (g_end == false && phi->sys->args.must_eat != 0)
 			p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 													, " is eating\n");
 		sem_post(phi->sys->s_write);
 		p_delay_two(phi, phi->l_m_t + phi->sys->args.t_to_eat);
+		sem_post(phi->sys->s_fork);
+		sem_post(phi->sys->s_fork);
 	}
-	sem_post(phi->sys->s_fork);
-	sem_post(phi->sys->s_fork);
-	p_check_hunger(&phi->sys->args.must_eat);
 	return (true);
 }
 
@@ -91,7 +90,7 @@ t_bool	p_think(t_phi *phi)
 	if (g_end == true)
 		return (false);
 	sem_wait(phi->sys->s_write);
-	if (g_end == false)
+	if (g_end == false && phi->sys->args.must_eat != 0)
 		p_put_timestamp(p_get_act_time(phi->sys->s_t), phi->tag
 														, " is thinking\n");
 	sem_post(phi->sys->s_write);

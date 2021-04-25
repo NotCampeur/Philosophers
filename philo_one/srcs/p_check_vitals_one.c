@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 13:22:51 by ldutriez          #+#    #+#             */
-/*   Updated: 2021/04/22 23:39:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/04/25 19:33:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void			*p_monitor_vitals_one(void *arg)
 
 	i = 0;
 	phi = (t_phi*)arg;
+	done = true;
 	while (i < phi->sys->args.phi_nb)
 	{
-		done = true;
 		if (phi[i].sys->args.must_eat != 0)
 			done = false;
 		if (p_philo_is_dead(&phi[i]) == true)
@@ -63,6 +63,7 @@ void			*p_monitor_vitals_one(void *arg)
 		{
 			if (p_philo_are_sated(phi, done) == true)
 				return (NULL);
+			done = true;
 			i = 0;
 		}
 	}
