@@ -5,7 +5,10 @@ A Multithread 42 school's project.
 
 > :warning: **Warning**: You can take inspiration from it but don't copy / paste what you don't understand.
 
-In this repository you will find two programs to find and test a sorting algorithm on a stack of int
+In this repository you will find three programs about the dining philosophers problem:  
+* The first one will introduce you to the use of pthread library and mutexes.  
+* The second will show you what semaphores are and how to use them.  
+* The last one show the differences between multi-threading and multi-processing.  
 
 # Last changes :
 > Norme is done.  
